@@ -1,0 +1,9 @@
+# R files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+# Annoying Mac file
+.DS_Store
+# Office junk
+~$*
