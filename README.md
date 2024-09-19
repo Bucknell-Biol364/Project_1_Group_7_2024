@@ -2,7 +2,7 @@
 
 ## Authors
 
-Trevor Neff
+Trevor
 Maria
 Ella
 
