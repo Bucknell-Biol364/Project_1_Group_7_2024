@@ -8,13 +8,15 @@ Ella
 
 ## Target Audience
 
-People New to R studio -> BIOL 202 Students
+People with a basic understanding and little experience of R BIOL 203/204
 
 ## Instructions
 
 
 
 ## Objectives
+
+
 
 Visualizing Data 
 - make specific types of graph / edit them (Specific goals TBD)
