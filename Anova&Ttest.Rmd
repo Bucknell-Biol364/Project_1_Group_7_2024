@@ -1,0 +1,3 @@
+Which type of analysis to use / using t-test, anova...
+- Recognize need for anova test - test using anova - analyze results
+- Recognize need for t test - test using t tes - analyze results

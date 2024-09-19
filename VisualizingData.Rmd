@@ -1,0 +1,2 @@
+Visualizing Data 
+- make specific types of graph / edit them (Specific goals TBD)

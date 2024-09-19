@@ -1,0 +1,3 @@
+Exploring normality of data
+-determine if a data set is normally distributed or not
+-normalize a set of data that isn't normal
