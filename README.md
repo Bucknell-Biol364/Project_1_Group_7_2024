@@ -2,9 +2,9 @@
 
 ## Authors
 
-Trevor
-Maria
-Ella
+Trevor - Anova / Ttest
+Maria - Visualizing
+Ella - Normality
 
 ## Target Audience
 
