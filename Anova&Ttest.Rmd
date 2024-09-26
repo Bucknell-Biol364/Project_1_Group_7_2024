@@ -1,5 +1,10 @@
 Which type of analysis to use / using t-test, anova...
-- Recognize need for anova test - test using anova - analyze results
-- Recognize need for t test - test using t test - analyze results
-- Determine an appropriate hypothesis and how to test the hypothesis using
-one of the above methods
+
+- Recognize the differences between one-way, two-way, mixed, or ANCOVA anova test, execute the test and interpret the results
+  - Determine if the explanatory variable(s) is continuous, discrete, or mixed
+  - Understand the meaning of p-values and how it relates to a normal distribution
+- Understand the differences between one-sample t test, two-sample t test, or paired t test, execute the test and interpret the results
+  - Learn how to assess an experimental design in order to choose the appropriate t-test
+  - Understand probability distributions and how it relates to t-tests
+
+
