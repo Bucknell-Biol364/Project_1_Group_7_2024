@@ -46,4 +46,9 @@ plot residuals of normalized
 get rid of NAs
 prep for hypothesis (Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent.)
 
-##Check the 
+##Check that the data read in correctly
+check columns and rows
+check top and bottom of data
+str() or glimse()
+check "n"s 
+
