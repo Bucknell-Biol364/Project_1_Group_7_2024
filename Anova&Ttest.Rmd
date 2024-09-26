@@ -1,3 +1,5 @@
 Which type of analysis to use / using t-test, anova...
 - Recognize need for anova test - test using anova - analyze results
-- Recognize need for t test - test using t tes - analyze results
+- Recognize need for t test - test using t test - analyze results
+- Determine an appropriate hypothesis and how to test the hypothesis using
+one of the above methods
