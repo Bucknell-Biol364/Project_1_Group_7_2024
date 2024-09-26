@@ -1,3 +1,49 @@
 Exploring normality of data
 -determine if a data set is normally distributed or not
 -normalize a set of data that isn't normal
+-get rid of NA
+
+
+```{r}
+library(readxl)
+Torgersen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
+View(Torgersen)
+```
+
+
+```{r}
+library(readxl)
+Biscoe <- read_excel("penguins.xlsx", sheet = "Biscoe Island")
+View(Biscoe)
+```
+
+```{r}
+library(readxl)
+Dream <- read_excel("penguins.xlsx", sheet = "Dream Island")
+View(Dream)
+```
+
+
+```{r}
+library(readxl)
+
+torgersenpen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
+biscoepen <- read_excel("penguins.xlsx", sheet = "Biscoe Island")
+dreampen <- read_excel("penguins.xlsx", sheet = "Dream Island")
+
+torgbisc <- rbind(torgersenpen, biscoepen)
+
+full <- rbind(torgbisc, dreampen)
+fullframe <- as.data.frame(full)
+```
+
+read in the data
+make sure the data is read in correctly
+plot the residuals
+read the residuals
+figure out how to normalize (log)
+plot residuals of normalized
+get rid of NAs
+prep for hypothesis (Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent.)
+
+##Check the 
