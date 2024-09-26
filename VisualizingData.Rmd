@@ -1,2 +1,29 @@
 Visualizing Data 
-- make specific types of graph / edit them (Specific goals TBD)
+- load data in -> make different columns for each island
+-make specific types of graph / edit them (Specific goals TBD)
+-hypothesis : Bill Length is different between the 3 species
+              Bill Length in Penguins from Torgersen's Island is Sex Dependent.
+-box-plot
+-scatter-plot
+
+Torgersen Island
+```{r}
+library(readxl)
+Torgersen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
+View(Torgersen)
+```
+
+Biscoe Island
+```{r}
+library(readxl)
+Biscoe <- read_excel("penguins.xlsx", sheet = "Biscoe Island")
+View(Biscoe)
+```
+
+Dream Island
+```{r}
+library(readxl)
+Dream <- read_excel("penguins.xlsx", sheet = "Dream Island")
+View(Dream)
+```
+
