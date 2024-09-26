@@ -1,2 +1,26 @@
 Visualizing Data 
 - make specific types of graph / edit them (Specific goals TBD)
+-hypothesis : 
+-box-plot
+-scatter-plot
+
+
+```{r}
+library(readxl)
+Torgersen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
+View(Torgersen)
+```
+
+
+```{r}
+library(readxl)
+Biscoe <- read_excel("penguins.xlsx", sheet = "Biscoe Island")
+View(Biscoe)
+```
+
+```{r}
+library(readxl)
+Dream <- read_excel("penguins.xlsx", sheet = "Dream Island")
+View(Dream)
+```
+
