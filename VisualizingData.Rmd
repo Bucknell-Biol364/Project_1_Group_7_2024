@@ -27,3 +27,20 @@ Dream <- read_excel("penguins.xlsx", sheet = "Dream Island")
 View(Dream)
 ```
 
+
+
+```{r}
+torgersenpen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
+biscoepen <- read_excel("penguins.xlsx", sheet = "Biscoe Island")
+dreampen <- read_excel("penguins.xlsx", sheet = "Dream Island")
+
+torgbisc <- rbind(torgersenpen, biscoepen)
+
+full <- rbind(torgbisc, dreampen)
+fullframe <- as.data.frame(full)
+
+
+fullframe
+```
+
+
