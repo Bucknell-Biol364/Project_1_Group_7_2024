@@ -35,6 +35,7 @@ torgbisc <- rbind(torgersenpen, biscoepen)
 
 full <- rbind(torgbisc, dreampen)
 fullframe <- as.data.frame(full)
+View(fullframe)
 ```
 
 read in the data
@@ -46,9 +47,100 @@ plot residuals of normalized
 get rid of NAs
 prep for hypothesis (Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent.)
 
-##Check that the data read in correctly
-check columns and rows
-check top and bottom of data
-str() or glimse()
-check "n"s 
+
+### 1. Start by loading the data and packages
+
+*above
+```{r}
+if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
+if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
+conflict_prefer_all("dplyr", quiet = TRUE)
+if (!require("dplyr")) install.packages("dplyr"); library(dplyr)
+if (!require("ggplot2")) install.packages("ggplot2"); library(ggplot2)
+if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
+```
+
+
+### 2. Make sure the data is read correctly
+
+#Check columns and rows
+```{r}
+nrow(fullframe)
+ncol(fullframe)
+View(fullframe)
+```
+
+#Check top and bottom of data
+```{r}
+head(fullframe)
+tail(fullframe)
+```
+
+#Run glimpse and catagorize data
+```{r}
+glimpse(fullframe)
+
+fullframe |> 
+  mutate(sex = as.factor(sex),
+         island = factor(island, levels = c("Dream", "Torgersen", "Biscoe")),
+         species = as.factor(species)) -> fullframe
+summary(fullframe)
+```
+
+#Check 'n's
+```{r}
+str(fullframe)
+table(fullframe$bill_length_mm)
+table(fullframe$sex)
+```
+
+#get rid of nas
+
+```{r}
+fullframe <- drop_na(fullframe, bill_length_mm)
+
+summary(fullframe)
+View(fullframe)
+```
+
+
+### 3. Plot the residuals
+
+```{r}
+fullframe=as.numeric(fullframe$bill_length_mm)
+```
+
+
+
+```{r}
+ggplot(fullframe) +
+  aes(x = bill_length_mm) +
+  geom_histogram() +
+  theme_cowplot()
+  
+```
+
+```{r}
+lmmasshatch <- lm(Mass.final ~ Hatch, data = RxP)
+summary(lmmasshatch)
+
+lmmasspred <- lm(Mass.final ~ Pred, data = RxP)
+summary(lmmasspred)
+
+lmmassres <- lm(Mass.final ~ Res, data = RxP)
+summary(lmmassres)
+
+plot(lmmasshatch)
+plot(lmmasspred)
+plot(lmmassres)
+```
+
+
+### 4. Discuss the residuals
+
+### 5. Figure out how to normalize the data
+
+### 6. Plot residuals of normalized
+
+### 7. Remove "NA"s
 
