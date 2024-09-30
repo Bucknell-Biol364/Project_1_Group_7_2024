@@ -76,6 +76,16 @@ head(fullframe)
 tail(fullframe)
 ```
 
+#get rid of nas
+```{r}
+
+fullframe <- drop_na(fullframe, sex)
+
+summary(fullframe)
+
+```
+
+
 #Run glimpse and catagorize data
 ```{r}
 glimpse(fullframe)
@@ -84,6 +94,13 @@ fullframe |>
   mutate(sex = as.factor(sex),
          island = factor(island, levels = c("Dream", "Torgersen", "Biscoe")),
          species = as.factor(species)) -> fullframe
+
+
+fullframe |>
+  mutate(bill_length_mm = as.numeric(bill_length_mm),
+         bill_depth_mm = as.numeric(bill_depth_mm),
+         flipper_length_mm = as.numeric(flipper_length_mm),
+         body_mass_g = as.numeric(body_mass_g)) -> fullframe
 summary(fullframe)
 ```
 
@@ -94,45 +111,31 @@ table(fullframe$bill_length_mm)
 table(fullframe$sex)
 ```
 
-#get rid of nas
-
-```{r}
-fullframe <- drop_na(fullframe, bill_length_mm)
-
-summary(fullframe)
-View(fullframe)
-```
-
-
 ### 3. Plot the residuals
-
-```{r}
-fullframe=as.numeric(fullframe$bill_length_mm)
-```
-
-
 
 ```{r}
 ggplot(fullframe) +
   aes(x = bill_length_mm) +
-  geom_histogram() +
+  geom_histogram(bins = 100) +
   theme_cowplot()
-  
+
+ggplot(fullframe) +
+  aes(x = bill_length_mm, colour = sex) +
+  geom_histogram(bins = 100) +
+  theme_cowplot()
+
 ```
-
+Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent
 ```{r}
-lmmasshatch <- lm(Mass.final ~ Hatch, data = RxP)
-summary(lmmasshatch)
+lmspecieslength <- lm(bill_length_mm ~ species, data = fullframe)
+summary(lmspecieslength)
 
-lmmasspred <- lm(Mass.final ~ Pred, data = RxP)
-summary(lmmasspred)
+lmsexlength <- lm(bill_length_mm ~ sex + island, data = fullframe)
+summary(lmsexlength)
 
-lmmassres <- lm(Mass.final ~ Res, data = RxP)
-summary(lmmassres)
 
-plot(lmmasshatch)
-plot(lmmasspred)
-plot(lmmassres)
+plot(lmspecieslength)
+plot(lmsexlength)
 ```
 
 
