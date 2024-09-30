@@ -3,26 +3,17 @@ Exploring normality of data
 -normalize a set of data that isn't normal
 -get rid of NA
 
+read in the data
+make sure the data is read in correctly
+plot the residuals
+read the residuals
+figure out how to normalize (log)
+plot residuals of normalized
+get rid of NAs
+prep for hypothesis (Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent.)
 
-```{r}
-library(readxl)
-Torgersen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
-View(Torgersen)
-```
 
-
-```{r}
-library(readxl)
-Biscoe <- read_excel("penguins.xlsx", sheet = "Biscoe Island")
-View(Biscoe)
-```
-
-```{r}
-library(readxl)
-Dream <- read_excel("penguins.xlsx", sheet = "Dream Island")
-View(Dream)
-```
-
+### 1. Start by loading the data and packages
 
 ```{r}
 library(readxl)
@@ -38,19 +29,7 @@ fullframe <- as.data.frame(full)
 View(fullframe)
 ```
 
-read in the data
-make sure the data is read in correctly
-plot the residuals
-read the residuals
-figure out how to normalize (log)
-plot residuals of normalized
-get rid of NAs
-prep for hypothesis (Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent.)
-
-
-### 1. Start by loading the data and packages
-
-*above
+#load required packages
 ```{r}
 if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
@@ -79,9 +58,7 @@ tail(fullframe)
 #get rid of nas
 ```{r}
 
-fullframe <- drop_na(fullframe, sex)
-
-summary(fullframe)
+sum(is.na(fullframe))
 
 ```
 
@@ -142,9 +119,42 @@ plot(lmsexlength)
 
 ### 4. Discuss the residuals
 
-### 5. Figure out how to normalize the data
+figure this out
 
-### 6. Plot residuals of normalized
+### 5. Figure out how to normalize the data and plot residuals
 
-### 7. Remove "NA"s
+```{r}
+ggplot(fullframe) +
+  aes(x = log10(bill_length_mm)) +
+  geom_histogram(bins = 100) +
+  theme_cowplot()
+
+```
+
+```{r}
+lmlogspecieslength <- lm(log10(bill_length_mm) ~ species, data = fullframe)
+summary(lmlogspecieslength)
+
+plot(lmlogspecieslength)
+```
+
+
+
+```{r}
+ggplot(fullframe) +
+  aes(x = log10(bill_length_mm), colour = sex, fill = sex) +
+  geom_histogram(bins = 100, position = "dodge") +
+  theme_cowplot()
+```
+
+
+```{r}
+lmlogsexlength <- lm(log10(bill_length_mm) ~ sex + island, data = fullframe)
+summary(lmlogsexlength)
+
+plot(lmlogsexlength)
+```
+
+
+
 
