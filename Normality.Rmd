@@ -120,9 +120,10 @@ ggplot(fullframe) +
   theme_cowplot()
 
 ggplot(fullframe) +
-  aes(x = bill_length_mm, colour = sex) +
-  geom_histogram(bins = 100) +
+  aes(x = bill_length_mm, colour = sex, fill = sex) +
+  geom_histogram(bins = 100, position = "dodge") +
   theme_cowplot()
+
 
 ```
 Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent
