@@ -1,14 +1,10 @@
-Visualizing Data 
-- load data in -> make different columns for each island
--make specific types of graph / edit them (Specific goals TBD)
--hypothesis : Bill Length is different between the 3 species
-              Bill Length in Penguins from Torgersen's Island is Sex Dependent.
--box-plot
--scatter-plot
+---
+title: "Normality 2"
+output: html_document
+date: "2024-09-30"
+---
 
-
-
-
+#Load In Data
 ```{r}
 if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
@@ -19,7 +15,7 @@ if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # F
 conflict_prefer_all("dplyr", quiet = TRUE)
 ```
 
-
+#Load in Excell File
 ```{r}
 library(readxl)
 
@@ -28,43 +24,44 @@ torgersenpen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
 torgersenpen <- as.data.frame(unclass(torgersenpen), stringsAsFactors=TRUE)
 
 torgersenpen |>
-  drop_na() -> Completetorgersenpen
-
-```
+  drop_na(sex, bill_length_mm) -> torgersenpenguins
 ```
 
-The hypothesis that we are going to visualize are:
+
+#View Data
+```{r}
+summary(torgersenpenguins)
+```
+
+##Hypothesis that we are going to visualize are:
     -Is Bill Length is different between the 3 species
     -Is Bill Length in Penguins from Torgersen's Island is Sex Dependent
 
-
-##BoxPlot with Jitter
 
 First view your data and get familiar with your variables.
 In this tutorial we will be testing if the Bill Length is different between the 3 species, and if Bill length in Penguins from Torgersen's Island is Sex Dependent.
 
 
-We created a dataset for Penguins in Torgersen's Island called "torgersenpen". Simply type in the dataset's name to view the data. Try bellow.
+We created a dataset for Penguins in Torgersen's Island called "torgersenpenguins". Simply type in the dataset's name to view the data. Try bellow.
 
 ```{r}
-summary(torgersenpen)
+torgersenpenguins
 ```
 
-First we will visualize if Bill Length in Penguins from Torgersen's Island is Sex Dependent. To do this we will create a boxplot looking at Bill Length of Penguins from Torgersen's Island seperated by Sex.
-
-This will 
+# Basic boxplot
 ```{r}
-ggplot(torgersenpen) +
-  aes(x = factor(sex), y = bill_length_mm) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_jitter(color="black",) +
-  theme_cowplot()
+boxplot(bill_length_mm ~ sex, data = torgersenpenguins,
+        xlab = "Sex",
+        ylab = "Bill Length",
+        main = "Boxplot of Bill Length by Sex",
+        col = c("lightblue", "lightpink"))
+
 ```
 
-##Histogram
+#Histogram
 
 ```{r}
-ggplot(torgersenpen) +
+ggplot(torgersenpenguins) +
   aes(x = bill_length_mm) +
   geom_histogram(bins=100) +
   theme_cowplot()+
