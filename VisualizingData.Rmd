@@ -52,7 +52,6 @@ summary(torgersenpen)
 
 First we will visualize if Bill Length in Penguins from Torgersen's Island is Sex Dependent. To do this we will create a boxplot looking at Bill Length of Penguins from Torgersen's Island seperated by Sex.
 
-This will 
 ```{r}
 ggplot(torgersenpen) +
   aes(x = factor(sex), y = bill_length_mm) +

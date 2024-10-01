@@ -4,7 +4,9 @@ output: html_document
 date: "2024-09-30"
 ---
 
-#Load In Data
+First load in the necessary packages!
+
+#Load In Packages
 ```{r}
 if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
@@ -14,6 +16,8 @@ if (!require("conflicted")) install.packages("conflicted"); library(conflicted) 
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
 conflict_prefer_all("dplyr", quiet = TRUE)
 ```
+
+Next Load in your data. You will be using data from an excell file.
 
 #Load in Excell File
 ```{r}
@@ -27,26 +31,28 @@ torgersenpen |>
   drop_na(sex, bill_length_mm) -> torgersenpenguins
 ```
 
+##The Hypothesis that we are going to visualize is:
+    -Is Bill Length in Penguins from Torgersen's Island is Sex Dependent
+    -Is Bill Length is different between the 3 species
+
+
+First view your data and get familiar with your variables.
+In this tutorial we will be testing if the Bill Length is different between the 3 species, and if Bill length in Penguins from Torgersen's Island is Sex Dependent.
+
+There are two simple ways to get a basic view of your data. You can simply type the name of your dataset to view the full data. You can also use summary(YourDataSet) to view the dataset with some summary statistics. Try both bellow!
 
 #View Data
 ```{r}
 summary(torgersenpenguins)
 ```
 
-##Hypothesis that we are going to visualize are:
-    -Is Bill Length is different between the 3 species
-    -Is Bill Length in Penguins from Torgersen's Island is Sex Dependent
-
-
-First view your data and get familiar with your variables.
-In this tutorial we will be testing if the Bill Length is different between the 3 species, and if Bill length in Penguins from Torgersen's Island is Sex Dependent.
-
-
 We created a dataset for Penguins in Torgersen's Island called "torgersenpenguins". Simply type in the dataset's name to view the data. Try bellow.
 
 ```{r}
 torgersenpenguins
 ```
+
+Next we will visualize the data comparing Bill Length by Sex to visuzlize if there is a significant differrence in Bill Length, depending on Sex.
 
 # Basic boxplot
 ```{r}
@@ -57,29 +63,107 @@ boxplot(bill_length_mm ~ sex, data = torgersenpenguins,
         col = c("lightblue", "lightpink"))
 
 ```
+Now we will add jitter to our boxplot :
+
+```{r}
+ggplot(torgersenpenguins) +
+  aes(x = factor(sex), y = bill_length_mm) +
+  geom_boxplot() +
+  geom_jitter(color="black", size=0.4, alpha=0.9) +
+  theme_cowplot() +
+  ylab("Bill Length (mm)")+
+  xlab(c(" "))+
+  scale_x_discrete(labels=c("Female","Male"))
+
+```
+##Analyze Graph
+Now you want to analyze your results and look for any differences in the data for our boxplots :
+
+In both of  boxplot we can see a significant difference between the Bill Length. It seems that males on average have a higher bill length than female penguins from Torgersen's island. Of course we will have to use a statistical test to check if this correlation is actually significant.
+
+
 
 #Histogram
 
+Next we will create a Histogram to visualize the same thing in the data. 
+
+In our histogram we want to display the Bill Length on the x-axis and separate these values by female and male.
+
+First lets create a histogram that includes just the Bill Lenght.
 ```{r}
 ggplot(torgersenpenguins) +
   aes(x = bill_length_mm) +
   geom_histogram(bins=100) +
   theme_cowplot()+
-  xlab("Egg Mass") + 
+  xlab("Bill Length (mm)") + 
   ylab("Count")
 
-ggplot(torgersenpen) +
+```
+
+Next lets separate these results by sex :
+```{r}
+ggplot(torgersenpenguins) +
   aes(x = bill_length_mm, color = sex, fill = sex) +
   geom_histogram(binwidth = 0.5, position = "dodge") +
   theme_cowplot()+
-    xlab("Bill_length") + 
+    xlab("Bill Length") + 
   ylab("Count")
 
-ggplot(torgersenpen) +
+```
+Finally, lets make these results look better in our graph :
+```{r}
+ggplot(torgersenpenguins) +
   aes(x = bill_length_mm,  fill = sex) + 
   geom_density(alpha=.3) +
   theme_cowplot()+
-  xlab("Bill Length") + 
+  xlab("Bill Length (mm)") + 
   ylab("Count")
 ```
+##Analyze Graph
+Now you want to analyze your results and look for any differences in the data for our Histogram :
+
+Our Histogram displays similar results to our boxplot, in which we can see a significant difference between the Bill Length seperated by sex. It seems that males on average have a higher bill length than female penguins from Torgersen's island. Of course we will have to use a statistical test to check if this correlation is actually significant.
+
+#Bar Chart
+```{r}
+# Calculate means for bill length by sex
+summary_data <- torgersenpenguins %>%
+  group_by(sex) %>%
+  summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+
+# Create bar plot without error bars
+ggplot(summary_data, aes(x = sex, y = mean_bill_length)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  labs(title = "Mean Bill Length by Sex (Torgersen Penguins)",
+       x = "Sex",
+       y = "Mean Bill Length (mm)") +
+  theme_cowplot()
+```
+
+This will create a very basic Bar Chart to visualize our Data.
+
+Next we will add error lines to this barchart:
+
+```{r}
+# Calculate means and standard errors for bill length by sex
+summary_data <- torgersenpenguins %>%
+  group_by(sex) %>%
+  summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
+            se_bill_length = sd(bill_length_mm, na.rm = TRUE) / sqrt(n()))
+
+# Create bar plot with error bars
+ggplot(summary_data, aes(x = sex, y = mean_bill_length)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  geom_errorbar(aes(ymin = mean_bill_length - se_bill_length,
+                    ymax = mean_bill_length + se_bill_length), 
+                width = 0.2) +
+  labs(title = "Bill Length by Sex (Torgersen Penguins)",
+       x = "Sex",
+       y = "Mean Bill Length (mm)") +
+  theme_cowplot()
+```
+##Analyze Data
+
+As you can see, our graphs are all consistent in that Males appear to have a higher average Bill Lenghth then Female penguins on Torgersen's island. We must test this with statistical models to verify if the correlation is actually there.
+
 
