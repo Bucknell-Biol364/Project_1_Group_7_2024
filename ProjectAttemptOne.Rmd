@@ -286,8 +286,10 @@ ggplot(summary_data, aes(x = sex, y = mean_bill_length)) +
 As you can see, our graphs are all consistent in that Males appear to have a higher average Bill Lenghth then Female penguins on Torgersen's island. We must test this with statistical models to verify if the correlation is actually there.
 
 
+##Analyzing Data using t-test, and Anova
+Now you will learn how to analyze data using T-tests and Anova.
 
-Which type of analysis to use / using t-test, anova...
+First, Which type of analysis to use / using t-test, anova...
 
 - Recognize the differences between one-way, two-way, mixed, or ANCOVA anova test, execute the test and interpret the results
   - Determine if the explanatory variable(s) is continuous, discrete, or mixed
