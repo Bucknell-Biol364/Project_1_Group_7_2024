@@ -15,6 +15,8 @@ prep for hypothesis (Bill Length is different between the 3 species, Bill Length
 
 ### 1. Start by loading the data and packages
 
+In order to read in strictly excel files, you must use the read_excel function. It is also important to note that the multiple sheets can cause issues, so you have to read them in sheet by sheet. Binding the data with rbind allows us to have each sheet into one data frame in R. 
+
 ```{r}
 library(readxl)
 
@@ -30,6 +32,9 @@ View(fullframe)
 ```
 
 #load required packages
+
+Packages are required to run certain funtions in R, the main ones being used here include 'conflicted', 'tidyverse', 'dplyr', 'ggplot2', and 'cowplot'. These same packages can be found in the "Packages" tab in the lower right panel. 
+
 ```{r}
 if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
@@ -37,10 +42,15 @@ conflict_prefer_all("dplyr", quiet = TRUE)
 if (!require("dplyr")) install.packages("dplyr"); library(dplyr)
 if (!require("ggplot2")) install.packages("ggplot2"); library(ggplot2)
 if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
+if (!require("UsingR")) install.packages("UsingR"); library(UsingR) # For the simple.eda function
 ```
 
 
 ### 2. Make sure the data is read correctly
+
+Even though you may not be familiar with the data set we are using, we will walk through how to check if your data set was read correctly into R. Checking the rows, columns, and total numbers reassures that no data is missing.
+
+The View() function allows you to see the whole data set completely. 
 
 #Check columns and rows
 ```{r}
@@ -55,15 +65,33 @@ head(fullframe)
 tail(fullframe)
 ```
 
-#get rid of nas
+#Remove 'NA's
+
+In order to run some of the functions later on, we will need to remove the 'NA's from the data set. We first should look at how many there are...
 ```{r}
 
 sum(is.na(fullframe))
 
 ```
 
+...then take them out. NA values can disrupt the data, and for this particular data set, we won't need them. 
+
+```{r}
+
+```
+
 
 #Run glimpse and catagorize data
+
+In the bottom left panel, type "?glimpse" and press enter. What does it show you?
+Glimpse in the package dplyr allows us to see every column in the data frame. This simply shows you as much data as possible.
+
+Then, we get into the function mutate. This allows us to change the type of variable for our data. R automatically read our data but we need to change the factor variables to factors and the numeric variables to numbers. The as.factor() function is used for the variables sex, island, and species. As you can see, you can also do levels within the factor, as portrayed in the island line of code. 
+
+The next code shows the same process but with the as.numeric function for the numerical values of bill length, bill depth, flipper length, and body mass. 
+
+Using the summary() function, you can see if the as.factor and as.numeric functions worked.
+
 ```{r}
 glimpse(fullframe)
 
@@ -82,6 +110,9 @@ summary(fullframe)
 ```
 
 #Check 'n's
+
+Again, although you are likely unfamiliar with this data set, the following code allows you to see the total number of observations made in the data set. If this did not match your original data you collected, you would have been made aware that the data didn't read in correctly. 
+
 ```{r}
 str(fullframe)
 table(fullframe$bill_length_mm)
@@ -90,25 +121,37 @@ table(fullframe$sex)
 
 ### 3. Plot the residuals
 
+First, lets look at the data. Using the ggplot() function, we can create a histogram (geom_histogram()) with the bill length (part of our original hypothesis). It is important to note that each time you create a graph, you have to explicitly state where you want the data pulled from. The theme_cowplot simply makes the graph pretty.
+
+For the second graph, certain features are added (including changing the data frame) to the aesthetic function (aes()) to make the graph specialized. With the colour() fucntion, you can group data within a graph. fill() simply makes it look better (play around with it and see what happends without the fill option!). The binwidth is another way to alter your graph with different widths (play around with this too! Try 0.5, then 3. What looks better?) With the position() function, it just indicates where your legend is. 
+
 ```{r}
 ggplot(fullframe) +
   aes(x = bill_length_mm) +
   geom_histogram(bins = 100) +
   theme_cowplot()
 
-ggplot(fullframe) +
+ggplot(torgersenpen) +
   aes(x = bill_length_mm, colour = sex, fill = sex) +
-  geom_histogram(bins = 100, position = "dodge") +
+  geom_histogram(binwidth = 1.5,  position = "dodge") +
   theme_cowplot()
 
 
 ```
-Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent
+*Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent*
+
+Residuals are the difference between an observed data value and a predicted data value. When we plot them, it allows us to see visually whether or not the data is normal or not. Using lm(), we can look at the residuals of the linear models we make. So, for our first relationship we want to look at (bill length and species), the code follows this pattern:
+name of linear model <- lm(bill length depends on(~) species, from the data frame fullframe)
+
+We can do a similar thing with our second relationship (bill length and sex). The one thing that needed to be changed was the fact that the data set torgersenpen had the specific data we needed, without the clutter of the fullframe data set.
+
+plot() graphs the linear models that you just made.
+
 ```{r}
 lmspecieslength <- lm(bill_length_mm ~ species, data = fullframe)
 summary(lmspecieslength)
 
-lmsexlength <- lm(bill_length_mm ~ sex + island, data = fullframe)
+lmsexlength <- lm(bill_length_mm ~ sex, data = torgersenpen)
 summary(lmsexlength)
 
 
@@ -119,20 +162,20 @@ plot(lmsexlength)
 
 ### 4. Discuss the residuals
 
-figure this out
+Although these graphs are a lot, the main ones we will focus on (to stay within the scope of this tutorial) are the QQ plots. A QQ plot shows  
 
 ### 5. Figure out how to normalize the data and plot residuals
 
-```{r}
-ggplot(fullframe) +
-  aes(x = log10(bill_length_mm)) +
-  geom_histogram(bins = 100) +
-  theme_cowplot()
+Using this following code, this allows us to take log10 of the bill length. Although our data looks fairly normalized, what would happen if you took the log10 of it?
 
+
+```{r}
+fullframe$log10bill_length <- log10(fullframe$bill_length_mm)
+simple.eda(fullframe$log10bill_length)
 ```
 
 ```{r}
-lmlogspecieslength <- lm(log10(bill_length_mm) ~ species, data = fullframe)
+lmlogspecieslength <- lm(log10bill_length ~ species, data = fullframe)
 summary(lmlogspecieslength)
 
 plot(lmlogspecieslength)
@@ -142,14 +185,14 @@ plot(lmlogspecieslength)
 
 ```{r}
 ggplot(fullframe) +
-  aes(x = log10(bill_length_mm), colour = sex, fill = sex) +
-  geom_histogram(bins = 100, position = "dodge") +
+  aes(x = log10(bill_length_mm)) +
+  geom_histogram(bins = 100) +
   theme_cowplot()
 ```
 
 
 ```{r}
-lmlogsexlength <- lm(log10(bill_length_mm) ~ sex + island, data = fullframe)
+lmlogsexlength <- lm(log10(bill_length_mm) ~ sex, data = torgersenpen)
 summary(lmlogsexlength)
 
 plot(lmlogsexlength)
