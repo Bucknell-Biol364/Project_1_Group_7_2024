@@ -99,7 +99,7 @@ table(fullframe$bill_length_mm)
 table(fullframe$sex)
 ```
 
-### 3. Plot the residuals
+### Plot the residuals
 
 First, lets look at the data. Using the ggplot() function, we can create a histogram (geom_histogram()) with the bill length (part of our original hypothesis). It is important to note that each time you create a graph, you have to explicitly state where you want the data pulled from. The theme_cowplot simply makes the graph pretty.
 
