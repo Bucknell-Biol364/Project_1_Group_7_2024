@@ -1,6 +1,8 @@
-### 1. Start by loading the data and packages
+### Start by loading the data and packages
 
-In order to read in strictly excel files, you must use the read_excel function. It is also important to note that the multiple sheets can cause issues, so you have to read them in sheet by sheet. Binding the data with rbind allows us to have each sheet into one data frame in R. 
+First, we need to look at our data file and understand what we are dealing with. In our example, the penguin data for three different islands is split up between three sheets in the .xlsx file. In order to read in strictly excel files, you must use the read_excel function. It is also important to note that the multiple sheets can cause issues, so you have to read them in sheet by sheet. Binding the data with rbind allows us to have each sheet into one data frame in R. 
+
+We will need to import the correct library that allows us to read .xlsx files in R. Then, we will need to extract each sheet in the .xlsx file into its own dataframe. It would be helpful for us to use the as.data.frame() function to convert the data to dataframes with correct variable types.
 
 ```{r}
 library(readxl)
@@ -31,7 +33,7 @@ if (!require("UsingR")) install.packages("UsingR"); library(UsingR) # For the si
 ```
 
 
-### 2. Make sure the data is read correctly
+### Make sure the data is read correctly
 
 Even though you may not be familiar with the data set we are using, we will walk through how to check if your data set was read correctly into R. Checking the rows, columns, and total numbers reassures that no data is missing.
 
@@ -293,46 +295,6 @@ Which type of analysis to use / using t-test, anova...
 - Understand the differences between one-sample t test, two-sample t test, or paired t test, execute the test and interpret the results
   - Learn how to assess an experimental design in order to choose the appropriate t-test
   - Understand probability distributions and how it relates to t-tests
-
-
-#Loading necessary libraries
-
-```{r}
-if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
-if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
-conflict_prefer_all("dplyr", quiet = TRUE)
-if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
-if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
-if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
-conflict_prefer_all("dplyr", quiet = TRUE)
-```
-#Reading and importing the data
-
-First, we need to look at our data file and understand what we are dealing with. In our example, the penguin data for three different islands is split up between three sheets in the .xlsx file.
-
-We will need to import the correct library that allows us to read .xlsx files in R. Then, we will need to extract each sheet in the .xlsx file into its own dataframe. It would be helpful for us to use the as.data.frame() function to convert the data to dataframes with correct variable types.
-```{r}
-library(readxl)
-
-torgersenpen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
-biscoepen <- read_excel("penguins.xlsx", sheet = "Biscoe Island")
-dreampen <- read_excel("penguins.xlsx", sheet = "Dream Island")
-
-torgersenpen <- as.data.frame(unclass(torgersenpen), stringsAsFactors=TRUE)
-
-torgersenpen |>
-  na.omit() -> torgersenpen
-
-biscoepen <- as.data.frame(unclass(biscoepen), stringsAsFactors=TRUE)
-
-biscoepen |> 
-  na.omit() ->biscoepen
-
-dreampen <- as.data.frame(unclass(dreampen), stringsAsFactors=TRUE)
-
-dreampen |> 
-  na.omit() -> dreampen
-```
 
 #Checking dataframe structure using str()
 ```{r}
