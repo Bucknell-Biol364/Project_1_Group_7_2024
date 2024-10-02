@@ -1,3 +1,11 @@
+---
+title: "Group Project 1"
+subtitle: "Biology 368/664 Bucknell University"
+output: pdf_document
+authors: Maria Ruccolo, Ella Boback, Trevor Neff
+date: 2 Oct 2024
+---
+
 ### Start by loading the data and packages
 
 First, we need to look at our data file and understand what we are dealing with. In our example, the penguin data for three different islands is split up between three sheets in the .xlsx file. In order to read in strictly excel files, you must use the read_excel function. It is also important to note that the multiple sheets can cause issues, so you have to read them in sheet by sheet. Binding the data with rbind allows us to have each sheet into one data frame in R. 
