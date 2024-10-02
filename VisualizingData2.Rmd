@@ -27,8 +27,6 @@ torgersenpen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
 
 torgersenpen <- as.data.frame(unclass(torgersenpen), stringsAsFactors=TRUE)
 
-torgersenpen |>
-  drop_na(sex, bill_length_mm) -> torgersenpenguins
 ```
 
 ##The Hypothesis that we are going to visualize is:
@@ -43,20 +41,20 @@ There are two simple ways to get a basic view of your data. You can simply type 
 
 #View Data
 ```{r}
-summary(torgersenpenguins)
+summary(torgersenpen)
 ```
 
 We created a dataset for Penguins in Torgersen's Island called "torgersenpenguins". Simply type in the dataset's name to view the data. Try bellow.
 
 ```{r}
-torgersenpenguins
+torgersenpen
 ```
 
 Next we will visualize the data comparing Bill Length by Sex to visuzlize if there is a significant differrence in Bill Length, depending on Sex.
 
 # Basic boxplot
 ```{r}
-boxplot(bill_length_mm ~ sex, data = torgersenpenguins,
+boxplot(bill_length_mm ~ sex, data = torgersenpen,
         xlab = "Sex",
         ylab = "Bill Length",
         main = "Boxplot of Bill Length by Sex",
@@ -66,7 +64,7 @@ boxplot(bill_length_mm ~ sex, data = torgersenpenguins,
 Now we will add jitter to our boxplot :
 
 ```{r}
-ggplot(torgersenpenguins) +
+ggplot(torgersenpen) +
   aes(x = factor(sex), y = bill_length_mm) +
   geom_boxplot() +
   geom_jitter(color="black", size=0.4, alpha=0.9) +
@@ -91,7 +89,7 @@ In our histogram we want to display the Bill Length on the x-axis and separate t
 
 First lets create a histogram that includes just the Bill Lenght.
 ```{r}
-ggplot(torgersenpenguins) +
+ggplot(torgersenpen) +
   aes(x = bill_length_mm) +
   geom_histogram(bins=100) +
   theme_cowplot()+
@@ -102,7 +100,7 @@ ggplot(torgersenpenguins) +
 
 Next lets separate these results by sex :
 ```{r}
-ggplot(torgersenpenguins) +
+ggplot(torgersenpen) +
   aes(x = bill_length_mm, color = sex, fill = sex) +
   geom_histogram(binwidth = 0.5, position = "dodge") +
   theme_cowplot()+
@@ -112,7 +110,7 @@ ggplot(torgersenpenguins) +
 ```
 Finally, lets make these results look better in our graph :
 ```{r}
-ggplot(torgersenpenguins) +
+ggplot(torgersenpen) +
   aes(x = bill_length_mm,  fill = sex) + 
   geom_density(alpha=.3) +
   theme_cowplot()+
@@ -127,7 +125,7 @@ Our Histogram displays similar results to our boxplot, in which we can see a sig
 #Bar Chart
 ```{r}
 # Calculate means for bill length by sex
-summary_data <- torgersenpenguins %>%
+summary_data <- torgersenpen %>%
   group_by(sex) %>%
   summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
 
@@ -146,7 +144,7 @@ Next we will add error lines to this barchart:
 
 ```{r}
 # Calculate means and standard errors for bill length by sex
-summary_data <- torgersenpenguins %>%
+summary_data <- torgersenpen %>%
   group_by(sex) %>%
   summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
             se_bill_length = sd(bill_length_mm, na.rm = TRUE) / sqrt(n()))
