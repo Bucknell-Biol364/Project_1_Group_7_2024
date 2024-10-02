@@ -7,6 +7,8 @@ Which type of analysis to use / using t-test, anova...
   - Learn how to assess an experimental design in order to choose the appropriate t-test
   - Understand probability distributions and how it relates to t-tests
 
+#Loading necessary libraries
+
 ```{r}
 if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
@@ -16,11 +18,11 @@ if (!require("conflicted")) install.packages("conflicted"); library(conflicted) 
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
 conflict_prefer_all("dplyr", quiet = TRUE)
 ```
-
+#Reading and importing the data
 
 First, we need to look at our data file and understand what we are dealing with. In our example, the penguin data for three different islands is split up between three sheets in the .xlsx file.
 
-We will need to import the correct library that allows us to read .xlsx files in R. Then, we will need to extract each sheet in the .xlsx file into its own dataframe. 
+We will need to import the correct library that allows us to read .xlsx files in R. Then, we will need to extract each sheet in the .xlsx file into its own dataframe. It would be helpful for us to use the as.data.frame() function to convert the data to dataframes with correct variable types.
 ```{r}
 library(readxl)
 
@@ -44,12 +46,12 @@ dreampen |>
   na.omit() -> dreampen
 ```
 
+#Checking dataframe structure using str()
 ```{r}
 str(torgersenpen)
 str(biscoepen)
 str(dreampen)
 ```
-
 For the sake of our data exploration, we should have a dataframe which includes all of the data from each separate island. Using the rbind() function, we are able to first bind the Torgersen data with the Biscoe data. Then, we can put it all together using rbind() on the torsergen+biscoe frame with the Dream frame. For safe measure, we will use as.data.frame() on the full set.
 
 ```{r}
