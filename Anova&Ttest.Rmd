@@ -1,24 +1,87 @@
 Which type of analysis to use / using t-test, anova...
 
-
-
 - Recognize the differences between one-way, two-way, mixed, or ANCOVA anova test, execute the test and interpret the results
   - Determine if the explanatory variable(s) is continuous, discrete, or mixed
   - Understand the meaning of p-values and how it relates to a normal distribution
 - Understand the differences between one-sample t test, two-sample t test, or paired t test, execute the test and interpret the results
   - Learn how to assess an experimental design in order to choose the appropriate t-test
   - Understand probability distributions and how it relates to t-tests
-  
+
+```{r}
+if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
+if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
+conflict_prefer_all("dplyr", quiet = TRUE)
+if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
+if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
+if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
+conflict_prefer_all("dplyr", quiet = TRUE)
+```
+
+
+First, we need to look at our data file and understand what we are dealing with. In our example, the penguin data for three different islands is split up between three sheets in the .xlsx file.
+
+We will need to import the correct library that allows us to read .xlsx files in R. Then, we will need to extract each sheet in the .xlsx file into its own dataframe. 
+```{r}
 library(readxl)
 
 torgersenpen <- read_excel("penguins.xlsx", sheet = "Torgersen Island")
 biscoepen <- read_excel("penguins.xlsx", sheet = "Biscoe Island")
 dreampen <- read_excel("penguins.xlsx", sheet = "Dream Island")
 
+torgersenpen <- as.data.frame(unclass(torgersenpen), stringsAsFactors=TRUE)
+
+torgersenpen |>
+  na.omit() -> torgersenpen
+
+biscoepen <- as.data.frame(unclass(biscoepen), stringsAsFactors=TRUE)
+
+biscoepen |> 
+  na.omit() ->biscoepen
+
+dreampen <- as.data.frame(unclass(dreampen), stringsAsFactors=TRUE)
+
+dreampen |> 
+  na.omit() -> dreampen
+```
+
+```{r}
+str(torgersenpen)
+str(biscoepen)
+str(dreampen)
+```
+
+For the sake of our data exploration, we should have a dataframe which includes all of the data from each separate island. Using the rbind() function, we are able to first bind the Torgersen data with the Biscoe data. Then, we can put it all together using rbind() on the torsergen+biscoe frame with the Dream frame. For safe measure, we will use as.data.frame() on the full set.
+
+```{r}
 torgbisc <- rbind(torgersenpen, biscoepen)
 
 full <- rbind(torgbisc, dreampen)
 fullframe <- as.data.frame(full)
+fullframe
+```
 
+Now that our full dataframe is established, we can begin exploring the data. We will first assess whether the bill length is different between the three species. To do this, we will conduct an anova.
+  - What type of variable is our explanatory variable? Response variable?
+```{r}
+fullframe$species <- as.factor(fullframe$species)
+billLaov <- aov(bill_length_mm ~ species, data = fullframe)
+summary(billLaov)
+```
 
+What type of ANOVA did our code conduct? Why was this type of ANOVA conducted? What do the results of our ANOVA tell us?
 
+Next, we will test whether or not the bill length in penguins for Torsergen's Island is sex-dependent. To do this, we will conduct yet another anova to determine the significance (if any) in this relationship.
+
+```{r}
+billLaov2 <- aov(bill_length_mm ~ sex, data = torgersenpen)
+summary(billLaov2)
+```
+What type of ANOVA did our code conduct? Why was this type of ANOVA conducted? What do the results of our ANOVA tell us?
+
+I want you to think about the other available statistical tests which are available to us in R, and which would be appropriate for completing the task of comparing bill lengths between sexes on Torsergen Island. What would this look like as code?
+
+```{r}
+t.test(bill_length_mm ~ sex, data = torgersenpen)
+```
+
+Why would we want to use this type of statistical test as opposed to an anova? What are the advantages and/or disadvantages? 
