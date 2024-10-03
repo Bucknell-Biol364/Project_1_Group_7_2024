@@ -48,6 +48,9 @@ Even though you may not be familiar with the data set we are using, we will walk
 The View() function allows you to see the whole data set completely. 
 
 #Check columns and rows
+
+Looking at these makes sure we have loaded in all the data and each variable.
+
 ```{r}
 nrow(fullframe)
 ncol(fullframe)
@@ -55,6 +58,9 @@ View(fullframe)
 ```
 
 #Check top and bottom of data
+
+The top and the bottom also can show us the kind of data we are looking at, as well as the framework of the set.
+
 ```{r}
 head(fullframe)
 tail(fullframe)
@@ -103,7 +109,7 @@ table(fullframe$sex)
 
 First, lets look at the data. Using the ggplot() function, we can create a histogram (geom_histogram()) with the bill length (part of our original hypothesis). It is important to note that each time you create a graph, you have to explicitly state where you want the data pulled from. The theme_cowplot simply makes the graph pretty.
 
-For the second graph, certain features are added (including changing the data frame) to the aesthetic function (aes()) to make the graph specialized. With the colour() fucntion, you can group data within a graph. fill() simply makes it look better (play around with it and see what happends without the fill option!). The binwidth is another way to alter your graph with different widths (play around with this too! Try 0.5, then 3. What looks better?) With the position() function, it just indicates where your legend is. 
+For the second graph, certain features are added (including changing the data frame) to the aesthetic function (aes()) to make the graph specialized. With the colour() fucntion, you can group data within a graph. fill() simply makes it look better (play around with it and see what happends without the fill option!). The binwidth is another way to alter your graph with different widths (play around with this too! Try 0.5, then 3. What looks better?) With the position() function, it just indicates where your legend is. You will learn how to better visualize the data later.
 
 ```{r}
 ggplot(fullframe) +
@@ -118,7 +124,6 @@ ggplot(torgersenpen) +
 
 
 ```
-*Bill Length is different between the 3 species, Bill Length in Penguins from Torgersen's Island is Sex Dependent*
 
 Residuals are the difference between an observed data value and a predicted data value. When we plot them, it allows us to see visually whether or not the data is normal or not. Using lm(), we can look at the residuals of the linear models we make. So, for our first relationship we want to look at (bill length and species), the code follows this pattern:
 name of linear model <- lm(bill length depends on(~) species, from the data frame fullframe)
@@ -142,7 +147,9 @@ plot(lmsexlength)
 
 ### 4. Discuss the residuals
 
-Although these graphs are a lot, the main ones we will focus on (to stay within the scope of this tutorial) are the QQ plots. A QQ plot shows  
+Although these graphs are a lot, the main ones we will focus on (to stay within the scope of this tutorial) are the QQ plots. A QQ plot basically shows how well the data matches the theoretical normal distribution. If all of the points are roughly along the dotted line, that means the data is mostly normally distributed. If the data points do not fit along the line at all it means the data is highly skewed.
+
+For these, it looks like the data is fairly normalized. The data on both the bill length ~ species and the bill length ~ sex look normal with closely fit data on the line. Normally, this would be it for making sure our data is normalized since it already looks normal, but the following code gives some tips on how to normalize a skewed set. 
 
 ### 5. Figure out how to normalize the data and plot residuals
 
@@ -153,7 +160,7 @@ Using this following code, this allows us to take log10 of the bill length. Alth
 fullframe$log10bill_length <- log10(fullframe$bill_length_mm)
 simple.eda(fullframe$log10bill_length)
 ```
-
+As you can see, it doesn't make it that much better, it even makes the QQ plot look worse. Since we are lucky with a normal data set, we don't need to use any normalizing functions. 
 
 ##Visualization of Your Data
 
