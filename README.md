@@ -22,8 +22,9 @@ The two hypothesis you will be testing using this data is:
 ## Objectives
 
 1. Exploring normality of data
--determine if a data set is normally distributed or not
--normalize a set of data that isn't normal
+- read in data and packages correctly
+- determine if a data set is normally distributed or not
+- normalize a set of data that isn't normal
 
 2. Visualizing Data 
 - create different types of graphs to visualize data with a specific hypothesis
