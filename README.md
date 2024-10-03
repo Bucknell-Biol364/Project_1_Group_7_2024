@@ -6,7 +6,7 @@ Trevor, Maria, Ella
 
 ## Target Audience
 
-People with a basic understanding and little experience of R (such as BIOL 203/204)
+People with a basic understanding and little experience of R (such as BIOL 203/204). Audience should already have R downloaded.
 
 ## Instructions
 
