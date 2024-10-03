@@ -1426,7 +1426,8 @@ conducted? What do the results of our ANOVA tell us?
 I want you to think about the other available statistical tests which
 are available to us in R, and which would be more appropriate for
 completing the task of comparing bill lengths between sexes on Torsergen
-Island. What would this look like as code?
+Island. Would the following code be appropriate for the task? Why or why
+not?
 
 ``` r
 t.test(bill_length_mm ~ sex, data = torgersenpen)
@@ -1444,7 +1445,24 @@ t.test(bill_length_mm ~ sex, data = torgersenpen)
     ## mean in group female   mean in group male 
     ##             37.55417             40.58696
 
-Why would we want to use this type of statistical test as opposed to an
-anova? What are the advantages and/or disadvantages? What type of t-test
-is R studio running for this comparison? How would the results of our
-analyses be different if the data was non-normal? Normalized?
+Finally, we will test the hypothesis that bill length is dependent on
+the interaction between sex and species. What type of ANOVA would be
+best for this analysis? Provide the code below.
+
+``` r
+anova3 <- aov(bill_length_mm ~ sex * species, data = fullframe)
+summary(anova3)
+```
+
+    ##              Df Sum Sq Mean Sq F value Pr(>F)    
+    ## sex           2   1179     590 110.201 <2e-16 ***
+    ## species       2   6976    3488 651.931 <2e-16 ***
+    ## sex:species   2     24      12   2.289  0.103    
+    ## Residuals   328   1755       5                   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+What do the results of this ANOVA tell us? Why are we able to run a
+two-way ANOVA with the given variables? Are there statistically
+significant results? Why wouldn’t we use a linear model in this type of
+analysis?
