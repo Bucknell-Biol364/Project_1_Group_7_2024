@@ -331,6 +331,7 @@ fullframe
 
 Now that our full dataframe is established, we can begin exploring the data. We will first assess whether the bill length is different between the three species. To do this, we will conduct an anova.
   - What type of variable is our explanatory variable? Response variable?
+
 ```{r}
 fullframe$species <- as.factor(fullframe$species)
 billLaov <- aov(bill_length_mm ~ species, data = fullframe)
@@ -345,16 +346,23 @@ Next, we will test whether or not the bill length in penguins for Torsergen's Is
 billLaov2 <- aov(bill_length_mm ~ sex, data = torgersenpen)
 summary(billLaov2)
 ```
+
 What type of ANOVA did our code conduct? Why was this type of ANOVA conducted? What do the results of our ANOVA tell us?
 
-I want you to think about the other available statistical tests which are available to us in R, and which would be more appropriate for completing the task of comparing bill lengths between sexes on Torsergen Island. What would this look like as code?
+I want you to think about the other available statistical tests which are available to us in R, and which would be more appropriate for completing the task of comparing bill lengths between sexes on Torsergen Island. Would the following code be appropriate for the task? Why or why not?
 
 ```{r}
 t.test(bill_length_mm ~ sex, data = torgersenpen)
 ```
 
-Why would we want to use this type of statistical test as opposed to an anova? What are the advantages and/or disadvantages? What type of t-test is R studio running for this comparison? How would the results of our analyses be different if the data was non-normal? Normalized?
+Finally, we will test the hypothesis that bill length is dependent on the interaction between sex and species. What type of ANOVA would be best for this analysis? Provide the code below.
 
+```{r}
+anova3 <- aov(bill_length_mm ~ sex * species, data = fullframe)
+summary(anova3)
+```
+
+What do the results of this ANOVA tell us? Why are we able to run a two-way ANOVA with the given variables? Are there statistically significant results? Why wouldn't we use a linear model in this type of analysis?
 
 
 
