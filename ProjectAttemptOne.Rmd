@@ -186,10 +186,14 @@ We created a dataset for Penguins in Torgersen's Island called "torgersenpenguin
 ```{r}
 torgersenpen
 ```
+It is important to understand the type of variables you have to understand how to best visualize them. There is numerical, or quantitative variables and categorical or qualitative variables. In our data set, type of island, and sex are our categorical variables and bill length is our numerical variable. Therefore, we will be using graphs that will compare categorical and numerical values. These include a Boxplot, Histogram and Bargraph.
 
-Next we will visualize the data comparing Bill Length by Sex to visuzlize if there is a significant differrence in Bill Length, depending on Sex.
+To start we will visualize the data comparing Bill Length by Sex to visuzlize if there is a significant differrence in Bill Length, depending on Sex.
 
-# Basic boxplot
+
+Our independent variable is sex, and our dependent variable in this hypothesis is bill length. Therefore we will structure the code boxplot(dependentvariable ~ indapendent variable). xlab and ylab are used to name the x and y axis. main is used to create a title for the whole graph, and col allows us to customize the colors of our graph.
+
+#Basic boxplot
 ```{r}
 boxplot(bill_length_mm ~ sex, data = torgersenpen,
         xlab = "Sex",
@@ -198,7 +202,10 @@ boxplot(bill_length_mm ~ sex, data = torgersenpen,
         col = c("lightblue", "lightpink"))
 
 ```
+#Jitter Boxplot
 Now we will add jitter to our boxplot :
+
+The code bellow shows a different way to code for a boxplot using ggplot. In this case, our x(independent) and y(dependent) variables stay the same. We add jitter using the function geom_jitter. We also changed the scale_x_discrete to change the lables of Male and Female on our x axis.
 
 ```{r}
 ggplot(torgersenpen) +
@@ -211,7 +218,7 @@ ggplot(torgersenpen) +
   scale_x_discrete(labels=c("Female","Male"))
 
 ```
-##Analyze Graph
+##Analyze Boxplot
 Now you want to analyze your results and look for any differences in the data for our boxplots :
 
 In both of  boxplot we can see a significant difference between the Bill Length. It seems that males on average have a higher bill length than female penguins from Torgersen's island. Of course we will have to use a statistical test to check if this correlation is actually significant.
@@ -223,7 +230,7 @@ Next we will create a Histogram to visualize the same thing in the data.
 
 In our histogram we want to display the Bill Length on the x-axis and separate these values by female and male.
 
-First lets create a histogram that includes just the Bill Lenght.
+First lets create a histogram that includes just the Bill Length.
 ```{r}
 ggplot(torgersenpen) +
   aes(x = bill_length_mm) +
@@ -253,21 +260,16 @@ ggplot(torgersenpen) +
   xlab("Bill Length (mm)") + 
   ylab("Count")
 ```
-##Analyze Graph
+##Analyze Histogram
 Now you want to analyze your results and look for any differences in the data for our Histogram :
 
 Our Histogram displays similar results to our boxplot, in which we can see a significant difference between the Bill Length seperated by sex. It seems that males on average have a higher bill length than female penguins from Torgersen's island. Of course we will have to use a statistical test to check if this correlation is actually significant.
 
 #Bar Chart
 ```{r}
-# Calculate means for bill length by sex
-summary_data <- torgersenpen %>%
-  group_by(sex) %>%
-  summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
-
-# Create bar plot without error bars
-ggplot(summary_data, aes(x = sex, y = mean_bill_length)) +
-  geom_bar(stat = "identity", fill = "lightblue") +
+ggplot(torgersenpen, aes(x = sex, y=bill_length_mm), fill = Type) + 
+  geom_bar(stat = "summary", position = "dodge")+ 
+  scale_fill_grey()+ 
   labs(title = "Mean Bill Length by Sex (Torgersen Penguins)",
        x = "Sex",
        y = "Mean Bill Length (mm)") +
@@ -276,29 +278,95 @@ ggplot(summary_data, aes(x = sex, y = mean_bill_length)) +
 
 This will create a very basic Bar Chart to visualize our Data.
 
-Next we will add error lines to this barchart:
+
+##Analyze Bar Chart
+
+As you can see, our graphs are all consistent in that Males appear to have a higher average Bill Lenghth then Female penguins on Torgersen's island. We must test this with statistical models to verify if the correlation is actually there.
+
+#Practice Using Second Hypothesis 
+Now we will ask you to test the second hypothesis, using the dataset fullframe, to compare the bill lengths among penguins from different islands. There is space for you to practice completing a boxplot, histogram, and barchart. If you are to get stuck, the answers are bellow for each visualization. Also attemtpt to analyze the graphs.
+
+
+##Practice Boxplot
 
 ```{r}
-# Calculate means and standard errors for bill length by sex
-summary_data <- torgersenpen %>%
-  group_by(sex) %>%
-  summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
-            se_bill_length = sd(bill_length_mm, na.rm = TRUE) / sqrt(n()))
 
-# Create bar plot with error bars
-ggplot(summary_data, aes(x = sex, y = mean_bill_length)) +
-  geom_bar(stat = "identity", fill = "lightblue") +
-  geom_errorbar(aes(ymin = mean_bill_length - se_bill_length,
-                    ymax = mean_bill_length + se_bill_length), 
-                width = 0.2) +
-  labs(title = "Bill Length by Sex (Torgersen Penguins)",
-       x = "Sex",
+```
+Analysis: 
+
+##Practice Histogram
+
+```{r}
+
+```
+Analysis: 
+
+##Practice Bar Chart
+```{r}
+
+```
+Analysis: 
+
+##Answers Boxplot
+```{r}
+#Without Jitter
+boxplot(bill_length_mm ~ island, data = fullframe,
+        xlab = "Island",
+        ylab = "Bill Length",
+        main = "Boxplot of Bill Length by Island",
+        col = c("lightblue", "lightpink", "lightgreen"))
+
+#With Jitter
+ggplot(fullframe) +
+  aes(x = factor(island), y = bill_length_mm) +
+  geom_boxplot() +
+  geom_jitter(color="black", size=0.4, alpha=0.9) +
+  theme_cowplot() +
+  ylab("Bill Length (mm)")+
+  xlab("Island")
+```
+Analysis: 
+
+##Answers Histogram
+```{r}
+#Just Bill Length
+ggplot(fullframe) +
+  aes(x = bill_length_mm) +
+  geom_histogram(bins=100) +
+  theme_cowplot()+
+  xlab("Bill Length (mm)") + 
+  ylab("Count")
+
+#Bill Length Seperated by Island
+
+ggplot(fullframe) +
+  aes(x = bill_length_mm, color = island, fill = island) +
+  geom_histogram(binwidth = 0.5, position = "dodge") +
+  theme_cowplot()+
+    xlab("Bill Length") + 
+  ylab("Count")
+
+ggplot(fullframe) +
+  aes(x = bill_length_mm,  fill = island) + 
+  geom_density(alpha=.3) +
+  theme_cowplot()+
+  xlab("Bill Length (mm)") + 
+  ylab("Count")
+
+```
+Analysis: 
+
+##Answers Bar Chart
+```{r}
+ggplot(fullframe, aes(x = island, y=bill_length_mm), fill = Type) + 
+  geom_bar(stat = "summary", position = "dodge")+ 
+  scale_fill_grey()+ 
+  labs(title = "Mean Bill Length by Island",
+       x = "Island",
        y = "Mean Bill Length (mm)") +
   theme_cowplot()
 ```
-##Analyze Bar Charts
-
-As you can see, our graphs are all consistent in that Males appear to have a higher average Bill Lenghth then Female penguins on Torgersen's island. We must test this with statistical models to verify if the correlation is actually there.
+Analysis:
 
 
 ##Analyzing Data using t-test, and Anova
