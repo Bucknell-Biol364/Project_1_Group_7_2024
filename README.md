@@ -15,8 +15,8 @@ Open the file in R, read through the R Markdown and following along by running t
 The DataSet we will be using is an excel file titled Penguins. This file includes data for penguins of three different islands. We will only be focusing on three variables: the Bill Length, the Sex, and what island the Penguins are from.
 
 The two hypotheses you will be testing using this data is:
-1. Is Bill Length in Penguins from Torgersen's Island is Sex Dependent.
-2. Is Bill Length is different between the penguins from the 3 different islands.
+1. Is Bill Length in Penguins from Torgersen's Island is Sex Dependent?
+2. Is Bill Length is different between the penguins different species?
 
 ## Objectives
 
