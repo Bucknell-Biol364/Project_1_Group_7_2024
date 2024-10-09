@@ -431,6 +431,3 @@ What do the results of this ANOVA tell us? Why are we able to run a two-way ANOV
 
 
 
-
-
-
