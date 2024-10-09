@@ -49,7 +49,7 @@ The View() function allows you to see the whole data set completely.
 
 #Check columns and rows
 
-Looking at these makes sure we have loaded in all the data and each variable.
+Looking at these makes sure we have loaded in all the data and each variable. We expect to find 8 columns and 335 rows.
 
 ```{r}
 nrow(fullframe)
