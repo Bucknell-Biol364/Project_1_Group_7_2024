@@ -165,8 +165,8 @@ As you can see, it doesn't make it that much better, it even makes the QQ plot l
 #Visualization of Your Data
 
 The Hypotheses that we are testing are:
-    -Is Bill Length in Penguins from Torgersen's Island Sex Dependent
-    -Is Bill Length different between penguins of different species.
+    -Is Bill Length in Penguins from Torgersen's Island Sex Dependent?
+    -Is Bill Length different between penguins of different species?
     
 We will be visualizing "Is Bill Length in Penguins from Torgersen's Island is Sex Dependent."
 
@@ -189,8 +189,6 @@ torgersenpen
 It is important to understand the type of variables you have to understand how to best visualize them. There is numerical, or quantitative variables and categorical or qualitative variables. In our data set, type of island, and sex are our categorical variables and bill length is our numerical variable. Therefore, we will be using graphs that will compare categorical and numerical values. These include a Boxplot, Histogram and Bargraph.
 
 To start we will visualize the data comparing Bill Length by Sex to visuzlize if there is a significant differrence in Bill Length, depending on Sex.
-
-
 
 
 ##Basic boxplot
