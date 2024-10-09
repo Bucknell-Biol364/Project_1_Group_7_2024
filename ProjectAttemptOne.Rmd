@@ -166,8 +166,7 @@ As you can see, it doesn't make it that much better, it even makes the QQ plot l
 
 The Hypotheses that we are testing are:
     -Is Bill Length in Penguins from Torgersen's Island Sex Dependent
-    -Is Bill Length different between penguins from the 3 different  
-    islands.
+    -Is Bill Length different between penguins of different species.
     
 We will be visualizing "Is Bill Length in Penguins from Torgersen's Island is Sex Dependent."
 
@@ -292,7 +291,7 @@ This will create a very basic Bar Chart to visualize our Data.
 As you can see, our graphs are all consistent in that Males appear to have a higher average Bill Lenghth then Female penguins on Torgersen's island. We must test this with statistical models to verify if the correlation is actually there.
 
 ##Practice Using Second Hypothesis 
-Now we will ask you to test the second hypothesis, using the dataset fullframe, to compare the bill lengths among penguins from different islands. There is space for you to practice completing a boxplot, histogram, and barchart. If you are to get stuck, the answers are bellow for each visualization. Also attemtpt to analyze the graphs.
+Now we will ask you to test the second hypothesis, using the dataset fullframe, to compare the bill lengths among penguins from different species. There is space for you to practice completing a boxplot, histogram, and barchart. If you are to get stuck, the answers are bellow for each visualization. Also attemtpt to analyze the graphs.
 
 
 ###Practice Boxplot
@@ -318,22 +317,22 @@ Analysis:
 ###Answers Boxplot
 ```{r}
 #Without Jitter
-boxplot(bill_length_mm ~ island, data = fullframe,
-        xlab = "Island",
+boxplot(bill_length_mm ~ species, data = fullframe,
+        xlab = "Species",
         ylab = "Bill Length",
-        main = "Boxplot of Bill Length by Island",
+        main = "Boxplot of Bill Length by Species",
         col = c("lightblue", "lightpink", "lightgreen"))
 
 #With Jitter
 ggplot(fullframe) +
-  aes(x = factor(island), y = bill_length_mm) +
+  aes(x = factor(species), y = bill_length_mm) +
   geom_boxplot() +
   geom_jitter(color="black", size=0.4, alpha=0.9) +
   theme_cowplot() +
   ylab("Bill Length (mm)")+
-  xlab("Island")
+  xlab("Species")
 ```
-Analysis: Our boxplot suggests that penguins from Biscoe and Dream have a higher average Bill length then penguins from Torgersen Island.
+Analysis: Our boxplot suggests that Chinstrap penguins have the highest average bill length, and adelie have the lowest average bill length.
 
 ###Answers Histogram
 ```{r}
@@ -345,36 +344,36 @@ ggplot(fullframe) +
   xlab("Bill Length (mm)") + 
   ylab("Count")
 
-#Bill Length Seperated by Island
+#Bill Length Seperated by Species
 
 ggplot(fullframe) +
-  aes(x = bill_length_mm, color = island, fill = island) +
+  aes(x = bill_length_mm, color = species, fill = species) +
   geom_histogram(binwidth = 0.5, position = "dodge") +
   theme_cowplot()+
     xlab("Bill Length") + 
   ylab("Count")
 
 ggplot(fullframe) +
-  aes(x = bill_length_mm,  fill = island) + 
+  aes(x = bill_length_mm,  fill = species) + 
   geom_density(alpha=.3) +
   theme_cowplot()+
   xlab("Bill Length (mm)") + 
   ylab("Count")
 
 ```
-Analysis: Our histogram suggests that penguins from Biscoe and Dream have a higher average Bill length then penguins from Torgersen Island. This is consistent with the boxplot.
+Analysis: Our histogram suggests that Chinstrap penguins have the highest average bill length, and adelie have the lowest average bill length. This is consistent with the boxplot.
 
 ###Answers Bar Chart
 ```{r}
-ggplot(fullframe, aes(x = island, y=bill_length_mm), fill = Type) + 
+ggplot(fullframe, aes(x = species, y=bill_length_mm), fill = Type) + 
   geom_bar(stat = "summary", position = "dodge")+ 
   scale_fill_grey()+ 
   labs(title = "Mean Bill Length by Island",
-       x = "Island",
+       x = "Species",
        y = "Mean Bill Length (mm)") +
   theme_cowplot()
 ```
-Analysis:Our Bar Chart suggests that penguins from Biscoe and Dream have a higher average Bill length then penguins from Torgersen Island. This is consistent with the boxplots and the histograms.
+Analysis:Our Bar Chart suggests that Chinstrap penguins have the highest average bill length, and adelie have the lowest average bill length. This is consistent with the boxplots and the histograms.
 
 
 ##Analyzing Data using t-test, and Anova
