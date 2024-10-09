@@ -395,21 +395,11 @@ str(torgersenpen)
 str(biscoepen)
 str(dreampen)
 ```
-For the sake of our data exploration, we should have a dataframe which includes all of the data from each separate island. Using the rbind() function, we are able to first bind the Torgersen data with the Biscoe data. Then, we can put it all together using rbind() on the torsergen+biscoe frame with the Dream frame. For safe measure, we will use as.data.frame() on the full set.
 
-```{r}
-torgbisc <- rbind(torgersenpen, biscoepen)
-
-full <- rbind(torgbisc, dreampen)
-fullframe <- as.data.frame(full)
-fullframe
-```
-
-Now that our full dataframe is established, we can begin exploring the data. We will first assess whether the bill length is different between the three species. To do this, we will conduct an anova.
+Since our full dataframe is already established, we can begin exploring the data. We will first assess whether the bill length is different between the three species. To do this, we will conduct an anova.
   - What type of variable is our explanatory variable? Response variable?
 
 ```{r}
-fullframe$species <- as.factor(fullframe$species)
 billLaov <- aov(bill_length_mm ~ species, data = fullframe)
 summary(billLaov)
 ```
