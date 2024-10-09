@@ -400,7 +400,7 @@ Since our full dataframe is already established, we can begin exploring the data
   - What type of variable is our explanatory variable? Response variable?
 
 ```{r}
-billLaov <- aov(bill_length_mm ~ species, data = fullframe)
+billLaov <- aov(bill_length_mm ~ island, data = fullframe)
 summary(billLaov)
 ```
 
@@ -424,7 +424,7 @@ t.test(bill_length_mm ~ sex, data = torgersenpen)
 Finally, we will test the hypothesis that bill length is dependent on the interaction between sex and species. What type of ANOVA would be best for this analysis? Provide the code below.
 
 ```{r}
-anova3 <- aov(bill_length_mm ~ sex * species, data = fullframe)
+anova3 <- aov(bill_length_mm ~ sex * island, data = fullframe)
 summary(anova3)
 ```
 
