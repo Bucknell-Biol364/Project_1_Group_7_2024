@@ -164,7 +164,7 @@ As you can see, it doesn't make it that much better, it even makes the QQ plot l
 
 #Visualization of Your Data
 
-The Hypothesis that we are testing are:
+The Hypotheses that we are testing are:
     -Is Bill Length in Penguins from Torgersen's Island is Sex Dependent
     -Is Bill Length is different between the 3 species
     
