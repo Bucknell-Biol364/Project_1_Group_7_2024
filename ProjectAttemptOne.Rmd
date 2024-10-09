@@ -8,6 +8,19 @@ date: 2 Oct 2024
 
 ## Start by loading the Data and Packages
 
+Packages are required to run certain funtions in R, the main ones being used here include 'conflicted', 'tidyverse', 'dplyr', 'ggplot2', and 'cowplot'. These same packages can be found in the "Packages" tab in the lower right panel. 
+
+```{r}
+if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
+if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
+conflict_prefer_all("dplyr", quiet = TRUE)
+if (!require("dplyr")) install.packages("dplyr"); library(dplyr)
+if (!require("ggplot2")) install.packages("ggplot2"); library(ggplot2)
+if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
+if (!require("UsingR")) install.packages("UsingR"); library(UsingR) # For the simple.eda function
+```
+
+
 First, we need to look at our data file and understand what we are dealing with. In our example, the penguin data for three different islands is split up between three sheets in the .xlsx file. In order to read in strictly excel files, you must use the read_excel function. It is also important to note that the multiple sheets can cause issues, so you have to read them in sheet by sheet. Binding the data with rbind allows us to have each sheet into one data frame in R. 
 
 We will need to import the correct library that allows us to read .xlsx files in R. Then, we will need to extract each sheet in the .xlsx file into its own dataframe. It would be helpful for us to use the as.data.frame() function to convert the data to dataframes with correct variable types.
@@ -26,17 +39,6 @@ fullframe <- as.data.frame(full)
 View(fullframe)
 ```
 
-Packages are required to run certain funtions in R, the main ones being used here include 'conflicted', 'tidyverse', 'dplyr', 'ggplot2', and 'cowplot'. These same packages can be found in the "Packages" tab in the lower right panel. 
-
-```{r}
-if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
-if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
-conflict_prefer_all("dplyr", quiet = TRUE)
-if (!require("dplyr")) install.packages("dplyr"); library(dplyr)
-if (!require("ggplot2")) install.packages("ggplot2"); library(ggplot2)
-if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
-if (!require("UsingR")) install.packages("UsingR"); library(UsingR) # For the simple.eda function
-```
 
 
 ### Make sure the data is read correctly
